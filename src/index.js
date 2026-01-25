@@ -9,7 +9,7 @@ import flash from 'express-flash';
 import conn from './db/conn.js';
 
 import User from './models/User.js';
-import Product from './models/Products.js';
+import Product from './models/Product.js';
 import Category from './models/Category.js';
 import Movement from './models/Movement.js';
 

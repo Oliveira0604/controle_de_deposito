@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import Product from './Products.js';
+import Product from './Product.js';
 import conn from '../db/conn.js';
 
 const Category = conn.define('Category', {

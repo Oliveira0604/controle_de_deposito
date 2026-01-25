@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import User from './User.js';
-import Product from './Products.js';
+import Product from './Product.js';
 import conn from '../db/conn.js';
 
 const Movement = conn.define('Movement', {
@@ -20,5 +20,6 @@ const Movement = conn.define('Movement', {
 
 Movement.belongsTo(Product)
 Movement.belongsTo(User)
+User.hasMany(Movement)
 
 export default Movement;
