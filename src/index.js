@@ -19,6 +19,7 @@ const FileStore = sessioFileStore(session);
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
+app.set('views', './src/views')
 
 app.use(express.urlencoded({
     extended: true
@@ -30,17 +31,8 @@ app.use(flash());
 
 app.use(express.static('public'));
 
-// Middleware para ver se a pessoa está logada, se sim, passa o id para o locals
-app.use((req, res, next) => {
-    if (req.session.userid) {
-        res.locals.session = req.session;
-    }
-
-    next();
-})
-
 app.use(session({
-    nome: 'session',
+    name: 'session',
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
@@ -55,6 +47,19 @@ app.use(session({
         httpOnly: true
     }
 }))
+
+// Middleware para ver se a pessoa está logada, se sim, passa o id para o locals
+app.use((req, res, next) => {
+    if (req.session.userid) {
+        res.locals.session = req.session;
+    }
+
+    next();
+})
+
+app.get('/', (req, res) => {
+    res.render('home')
+})
 
 async function startApp () {
     try {
