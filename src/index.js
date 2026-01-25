@@ -8,6 +8,11 @@ import 'dotenv/config';
 import flash from 'express-flash';
 import conn from './db/conn.js';
 
+import User from './models/User.js';
+import Product from './models/Products.js';
+import Category from './models/Category.js';
+import Movement from './models/Movement.js';
+
 const app = express();
 
 const FileStore = sessioFileStore(session);
