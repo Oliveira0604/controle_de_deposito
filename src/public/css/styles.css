@@ -94,6 +94,18 @@
     font-size: 20px;
 }
 
+/* MESSAGE */
+.message {
+    padding: 1em;
+    color: #fff;
+    background-color: #0018ff;
+    border: 1px solid #0018ff;
+    border-radius: 5px;
+    text-align: center;
+    margin: 0 auto 2em;
+    max-width: 60%;
+}
+
 /* LOGIN & REGISTER */
 .auth-container {
     max-width: 450px;
