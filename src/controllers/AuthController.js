@@ -8,6 +8,36 @@ export const loginPage = (req, res) => {
     res.render('auth/login')
 }
 
+export const loginPost = async (req, res) => {
+    const { email, password } = req.body;
+
+    // faz a busca no banco para verificar se o usuário existe
+    const user = await User.findOne({ where: { email: email } })
+
+    // se não exister, renderiza a página de login novamente
+    if (!user) {
+        req.flash('message', 'Email não encotrado')
+        return res.render('auth/login')
+    }
+
+    // verifica se a senha salva no banco e a senha informada são iguais
+    const passwordMatch = await bcrypt.compare(password, user.password)
+
+    // se não forem, da a mensagem e renderiza a página de login
+    if (!passwordMatch) {
+        req.flash('message', 'Email ou senha incorretos')
+        return res.render('auth/login')
+    }
+
+    // a session em userid recebe o id so usuário e o servidor inicia a sessão criando um id de sessão único.
+    req.session.userid = user.id;
+    req.session.save(() => {
+        res.render('products/dashboard')
+    })
+
+
+}
+
 export const registerPage = (req, res) => {
     res.render('auth/register')
 }
