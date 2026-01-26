@@ -32,7 +32,7 @@ export const loginPost = async (req, res) => {
     // a session em userid recebe o id so usuário e o servidor inicia a sessão criando um id de sessão único.
     req.session.userid = user.id;
     req.session.save(() => {
-        res.render('products/dashboard')
+        res.redirect('/products/dashboard')
     })
 
 

@@ -13,10 +13,17 @@
 <body>
     <nav class="navbar">
         <img src="/img/caixa.webp" alt="">
+        {{#if session.userid}}
+        <ul>
+            <li><a href="/">Teste</a></li>
+        </ul>
+        {{else}}
         <ul>
             <li><a href="/auth/register">Criar Conta</a></li>
             <li><a href="/auth/login">Login</a></li>
         </ul>
+        {{/if }}
+
     </nav>
     <div class="container-message">
         {{#if messages.message}}
@@ -27,7 +34,7 @@
         {{{body}}}
     </div>
     <footer>
-        <p><span>Controle de deposito  &copy; 2026</span></p>
+        <p><span>Controle de deposito &copy; 2026</span></p>
     </footer>
 </body>
 

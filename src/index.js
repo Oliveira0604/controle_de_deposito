@@ -13,7 +13,8 @@ import Product from './models/Product.js';
 import Category from './models/Category.js';
 import Movement from './models/Movement.js';
 
-import authRoutes from './routes/authRoutes.js'
+import authRoutes from './routes/authRoutes.js';
+import productsRoutes from './routes/productsRoutes.js'
 
 const app = express();
 
@@ -60,6 +61,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/auth', authRoutes)
+app.use('/products', productsRoutes)
 
 app.get('/', (req, res) => {
     res.render('home')
