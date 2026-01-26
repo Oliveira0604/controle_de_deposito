@@ -1,11 +1,15 @@
 import Product from "../models/Product.js";
 import Category from "../models/Category.js";
 import { formattedProductName, productNameValidation } from "../helpers/productValidation.js"
+import Movement from "../models/Movement.js";
 
-export const createProduct = async (data) => {
+export const createProduct = async (bodyData, sessionData) => {
 
     // pega os dados que vem do form 
-    const { name, sku, price, quantity, categoryId, description } = data;
+    const { name, sku, price, quantity, categoryId, description } = bodyData;
+
+    // pega o id do usuário
+    const userId = sessionData;
 
     // passa os dados que vem do body como string para Number
     const parsedPrice = Number(price);
@@ -75,5 +79,12 @@ export const createProduct = async (data) => {
         CategoryId: categoryData.id
     }
 
-    await Product.create(product);
+    const createdProduct = await Product.create(product);
+    await Movement.create({
+        type: 'in',
+        quantity: parsedQuantity,
+        description: 'produto cadastrado',
+        ProductId: createdProduct.id,
+        UserId: userId
+    })
 }

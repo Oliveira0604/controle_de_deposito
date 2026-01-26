@@ -1,8 +1,5 @@
-import Product from "../models/Product.js"
-import Category from "../models/Category.js"
 import { createProduct } from '../services/ProductService.js'
 
-import { formattedProductName, productNameValidation } from "../helpers/productValidation.js"
 
 export const addPage = (req, res) => {
     res.render('products/add')
@@ -11,7 +8,7 @@ export const addPage = (req, res) => {
 export const addSave = async (req, res) => {
 
     try {
-        await createProduct(req.body);
+        await createProduct(req.body, req.session.userid);
 
         req.flash('message', 'O produto foi cadastrado com sucesso!');
         req.session.save(() => {
@@ -19,6 +16,7 @@ export const addSave = async (req, res) => {
         })
     } catch (error) {
         console.log(`Erro ao salvar o produto: ${error}`)
+        req.flash('message', 'Erro ao cadastrar o produto')
         return res.render('products/add')
     }
 }
