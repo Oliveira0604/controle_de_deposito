@@ -16,6 +16,8 @@ import Movement from './models/Movement.js';
 import authRoutes from './routes/authRoutes.js';
 import productsRoutes from './routes/productsRoutes.js'
 
+import { checkAuth } from './helpers/auth.js';
+
 const app = express();
 
 const FileStore = sessioFileStore(session);
@@ -61,7 +63,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/auth', authRoutes)
-app.use('/products', productsRoutes)
+app.use('/products', checkAuth, productsRoutes)
 
 app.get('/', (req, res) => {
     res.render('home')
