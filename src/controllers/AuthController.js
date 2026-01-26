@@ -1,6 +1,6 @@
 import User from '../models/User.js'
-import { validateName, validatePassword } from '../helpers/validations.js';
-import { formatName } from '../helpers/formatation.js';
+import { validateName, validatePassword } from '../helpers/validation.js';
+import { formatName } from '../helpers/formatting.js';
 
 import bcrypt from 'bcrypt';
 
