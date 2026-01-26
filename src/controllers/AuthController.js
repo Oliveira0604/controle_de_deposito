@@ -1,4 +1,6 @@
 import User from '../models/User.js'
+import { validateName, validatePassword } from '../helpers/validations.js';
+import { formatName } from '../helpers/formatation.js';
 
 import bcrypt from 'bcrypt';
 
@@ -13,59 +15,37 @@ export const registerPage = (req, res) => {
 export const registerSave = async (req, res) => {
     const { name, email, password, confirmPassword } = req.body
 
-    // tirando os espaços do inicio e final
-    const trimmedName = name ? name.trim() : '';
+    // uso do helper de validateName
+    const nameError = validateName(name);
 
-    // verificando se o nome é vázio
-    if (trimmedName === '') {
-        req.flash('message', 'O nome é obrigatório')
+    // formata o nome para o padrão esperado
+    const formattedName = formatName(name)
+
+    // se alguma das condições não forem atentida da a flash message e renderiza a mesma página
+    if (nameError) {
+        req.flash('message', nameError);
         return res.render('auth/register')
     }
 
-    // verifica se o nome tem menos de 3 letras
-    if (trimmedName.length < 3) {
-        req.flash('message', 'O nome precisa ter 3 letras ou mais')
-        res.render('auth/register')
-    }
-
-    // verifica se o nome tem símbolos ou números
-    if (!/^[a-zA-ZÀ-ÿ\s]+$/.test(trimmedName)) {
-        req.flash('message', 'O nome não deve conter números ou símbolos.');
-        return res.render('auth/register');
-    }
-
-    // Faz a formatação do nome para sempre ter a primeira letra maiúscula
-    const finalName = trimmedName.split(' ').map(name =>
-        name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
-    ).join(' ');
+    // formata o email 
+    const formattedEmail = email.trim().toLowerCase()
 
     // faz a busca de um email parecido no banco
-
-    const checkEmail = await User.findOne({ where: { email: email } });
+    const emailExists = await User.findOne({ where: { email: formattedEmail } });
 
 
     // verifica se existr algum usuário com o mesmo email
-    if (checkEmail) {
+    if (emailExists) {
         req.flash('message', 'Esse email já esta cadastrado')
         return res.render('auth/register')
     }
 
-    // verifica se as senhas são iguais
-    if (password != confirmPassword) {
-        req.flash('message', 'As senhas não conhecidem')
+    // verifica se a senha atende ao padrão
+    const passwordError = validatePassword(password, confirmPassword);
+
+    if (passwordError) {
+        req.flash('message', passwordError);
         return res.render('auth/register')
-    }
-
-    // criando os padrões Regex para verificar letras maiúsculas, minúsculas e caracteres especiais e se tem 8 ou mais caracteres
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasLowerCase = /[a-z]/.test(password);
-    const hasSymbols = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    const isLengthValid = password.length >= 8;
-
-    // verifica se atende a todas as condições
-    if (!hasUpperCase || !hasLowerCase || !hasSymbols || !isLengthValid) {
-        req.flash('message', 'A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas e símbolos.')
-        res.render('auth/register')
     }
 
     // prepara o algoritmo do hash
@@ -74,9 +54,11 @@ export const registerSave = async (req, res) => {
     // criptografa a senha
     const hashedPassword = await bcrypt.hash(password, salt)
 
+    console.log(formattedName)
+
     const user = {
-        name: finalName,
-        email: email,
+        name: formattedName,
+        email: formattedEmail,
         password: hashedPassword
     }
 
@@ -87,6 +69,8 @@ export const registerSave = async (req, res) => {
 
     } catch (error) {
         console.log(error)
+        req.flash('message', 'Erro ao criar a conta')
+        return res.render('auth/register')
     }
 
 }
