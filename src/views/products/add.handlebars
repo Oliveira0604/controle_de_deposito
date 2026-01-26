@@ -1,0 +1,21 @@
+<div class="add-container">
+    <h2>Criar Conta</h2>
+    <form action="/products/add" method="post">
+        <div class="form-control">
+            <label for="name">Nome:</label>
+            <input type="text" name="name" placeholder="Digite o seu nome" required>
+        </div>
+        <div class="form-control">
+            <label for="sku">Código:</label>
+            <input type="text" name="sku" placeholder="Digite o código" required>
+        </div>
+        <div class="form-control">
+            <label for="price">Preço:</label>
+            <input type="number" name="price" placeholder="R$" required step="0.01">
+        </div>
+        <div class="form-control">
+            <textarea name="description" placeholder="Descreva o produto"></textarea>
+        </div>
+        <input type="submit" value="Adicionar">
+    </form>
+</div>
