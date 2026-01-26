@@ -1,7 +1,9 @@
 import express from 'express';
 const router = express.Router()
 
-router.get('login', loginPage)
+import { loginPage} from '../controllers/AuthController.js'
+
+router.get('/login', loginPage)
 
 
 

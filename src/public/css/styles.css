@@ -84,7 +84,7 @@
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 15px; 
+    gap: 15px;
 }
 
 .container-texto ul li {
@@ -92,6 +92,75 @@
     align-items: center;
     margin-top: 1.5em;
     font-size: 20px;
+}
+
+/* LOGIN & REGISTER */
+.auth-container {
+    max-width: 450px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 68vh;
+}
+
+.auth-container h2 {
+    margin-bottom: 1em;
+    color: #fff;
+    padding: .3em;
+    width: 100px;
+}
+
+.form-control {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.form-control label {
+    font-weight: bold;
+    margin-bottom: .5em;
+}
+
+.form-control input {
+    padding: 7px;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+    width: 300px;
+}
+
+.form-control input::placeholder {
+    font-weight: bold;
+}
+
+form input[type='submit'] {
+    background-color: #0018ff;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border-color: #0018ff;
+    font-weight: bold;
+}
+
+form input[type='submit']:hover {
+    background-color: #5464f0;
+    color: #ccc
+}
+
+.auth-container p {
+    margin-top: 1.5em;
+}
+
+.auth-container a {
+    text-decoration: none;
+}
+
+.auth-container span {
+    color: #0018ff;
+}
+
+.auth-container span:hover {
+    color: #5464f0;
 }
 
 /* FOOTER */

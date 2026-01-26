@@ -1,3 +1,3 @@
-export default loginPage = (req, res) => {
-    res.render('/auth/login')
+export const loginPage = (req, res) => {
+    res.render('auth/login')
 }
