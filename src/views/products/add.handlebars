@@ -1,5 +1,5 @@
 <div class="add-container">
-    <h2>Criar Conta</h2>
+    <h2>Adicionar Porduto</h2>
     <form action="/products/add" method="post">
         <div class="form-control">
             <label for="name">Nome:</label>
@@ -16,6 +16,10 @@
          <div class="form-control">
             <label for="quantity">Quantidade:</label>
             <input type="number" name="quantity" placeholder="Quantidade" required>
+        </div>
+         <div class="form-control">
+            <label for="category">Categoria:</label>
+            <input type="number" name="categoryId" placeholder="1- Eletrônico; 2- Limpeza; 3- Escritório" required>
         </div>
         <div class="form-control">
             <textarea name="description" placeholder="Descreva o produto"></textarea>

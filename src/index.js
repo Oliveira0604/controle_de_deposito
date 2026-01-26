@@ -17,6 +17,7 @@ import authRoutes from './routes/authRoutes.js';
 import productsRoutes from './routes/productsRoutes.js'
 
 import { checkAuth } from './helpers/auth.js';
+import { seedCategories } from './seeders/categorySeed.js';
 
 const app = express();
 
@@ -72,6 +73,7 @@ app.get('/', (req, res) => {
 async function startApp () {
     try {
         await conn.sync({force: false})
+        await seedCategories()
         console.log('Banco conectado com sucesso')
         app.listen(process.env.PORT)
     } catch (error) {
