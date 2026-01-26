@@ -29,7 +29,7 @@ app.use(express.json());
 
 app.use(flash());
 
-app.use(express.static('public'));
+app.use(express.static('src/public'));
 
 app.use(session({
     name: 'session',
