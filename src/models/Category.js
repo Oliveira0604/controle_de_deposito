@@ -5,7 +5,8 @@ import conn from '../db/conn.js';
 const Category = conn.define('Category', {
     name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     }
 })
 

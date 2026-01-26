@@ -16,7 +16,7 @@ export const loginPost = async (req, res) => {
 
     // se não exister, renderiza a página de login novamente
     if (!user) {
-        req.flash('message', 'Email não encotrado')
+        req.flash('message', 'Usuario não encotrado')
         return res.render('auth/login')
     }
 

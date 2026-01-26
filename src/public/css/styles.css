@@ -248,7 +248,7 @@ form input[type='submit']:hover {
 
 textarea {
     width: 315px;
-    height: 100px;
+    height: 80px;
     border-color: #fff;
     border-radius: 5px;
     padding: .5em;

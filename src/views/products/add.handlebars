@@ -3,7 +3,7 @@
     <form action="/products/add" method="post">
         <div class="form-control">
             <label for="name">Nome:</label>
-            <input type="text" name="name" placeholder="Digite o seu nome" required>
+            <input type="text" name="name" placeholder="Digite o nome do produto" required>
         </div>
         <div class="form-control">
             <label for="sku">Código:</label>
@@ -12,6 +12,10 @@
         <div class="form-control">
             <label for="price">Preço:</label>
             <input type="number" name="price" placeholder="R$" required step="0.01">
+        </div>
+         <div class="form-control">
+            <label for="quantity">Quantidade:</label>
+            <input type="number" name="quantity" placeholder="Quantidade" required>
         </div>
         <div class="form-control">
             <textarea name="description" placeholder="Descreva o produto"></textarea>
