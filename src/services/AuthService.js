@@ -85,6 +85,6 @@ export const register = async (req, res) => {
 
     await User.create(user)
     req.flash('message', 'Conta criada com sucesso!')
-    res.render('auth/login')
+    return res.render('auth/login')
 
 }

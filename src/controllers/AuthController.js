@@ -1,9 +1,3 @@
-import User from '../models/User.js'
-import { validateName, validatePassword } from '../helpers/validation.js';
-import { formatName } from '../helpers/formatting.js';
-
-import bcrypt from 'bcrypt';
-
 import { login, register } from '../services/AuthService.js'
 
 export const loginPage = (req, res) => {
