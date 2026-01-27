@@ -1,8 +1,17 @@
 import { productNameValidation } from '../../src/helpers/productValidation.js';
-import { formatName } from '../../src/helpers/formatting.js';
 describe('ProductValidation.js', () => {
-    test('deve retornar o nome validado', () => {
-        const name = 5555555;
+    test('deve barra nome vazio', () => {
+        const name = '';
+        expect(productNameValidation(name)).toBe('O nome do produto não pode ser vazio');
+    })
+
+     test('deve barrar nome sem letra', () => {
+        const name = '55555';
         expect(productNameValidation(name)).toBe('O nome do produto deve conter pelo menos uma letra');
+    })
+
+      test('deve barrar simbolos no nome', () => {
+        const name = 'Tv @#$';
+        expect(productNameValidation(name)).toBe('O nome do produto não deve conter símbolos.');
     })
 })
