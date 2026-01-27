@@ -1,6 +1,7 @@
 import Product from "../models/Product.js";
 import Category from "../models/Category.js";
-import { formattedProductName, productNameValidation } from "../helpers/productValidation.js"
+import { productNameValidation } from "../helpers/productValidation.js";
+import { formatName } from "../helpers/formatting.js";
 import Movement from "../models/Movement.js";
 
 export const createProduct = async (bodyData, sessionData) => {
@@ -25,7 +26,7 @@ export const createProduct = async (bodyData, sessionData) => {
     }
 
     // tratamento do nome do produto
-    const finalProductName = formattedProductName(name)
+    const finalProductName = formatName(name)
 
 
     if (sku.length != 7) {
