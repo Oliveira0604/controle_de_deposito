@@ -1,4 +1,5 @@
 import { productNameValidation } from '../../src/helpers/productValidation.js';
+
 describe('ProductValidation.js', () => {
     test('deve barra nome vazio', () => {
         const name = '';
