@@ -8,7 +8,7 @@ export const addPage = (req, res) => {
 export const addSave = async (req, res) => {
 
     try {
-        await createProduct(req.body, req.session.userid);
+        await createProduct(req, res, req.session.userid);
 
         req.flash('message', 'O produto foi cadastrado com sucesso!');
         req.session.save(() => {

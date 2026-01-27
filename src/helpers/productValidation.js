@@ -1,6 +1,7 @@
 export const productNameValidation = (name) => {
     //verifica se o nome não tem só espaço, se tiver, transforma em uma string vazia
-    const trimmedNameProduct = name ? name.trim() : '';
+    const parsedName = String(name)
+    const trimmedNameProduct = parsedName ? parsedName.trim() : '';
 
     if (!trimmedNameProduct) {
         return 'O nome do produto não pode ser vazio';

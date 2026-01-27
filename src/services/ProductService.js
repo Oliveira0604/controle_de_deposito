@@ -4,10 +4,10 @@ import { productNameValidation } from "../helpers/productValidation.js";
 import { formatName } from "../helpers/formatting.js";
 import Movement from "../models/Movement.js";
 
-export const createProduct = async (bodyData, sessionData) => {
+export const createProduct = async (requisition, reply, sessionData) => {
 
     // pega os dados que vem do form 
-    const { name, sku, price, quantity, categoryId, description } = bodyData;
+    const { name, sku, price, quantity, categoryId, description } = requisition.body;
 
     // pega o id do usuário
     const userId = sessionData;
@@ -21,8 +21,8 @@ export const createProduct = async (bodyData, sessionData) => {
     const productNameErro = productNameValidation(name);
 
     if (productNameErro) {
-        req.flash('message', productNameErro)
-        return res.render('products/add')
+        requisition.flash('message', productNameErro)
+        return reply.render('products/add')
     }
 
     // tratamento do nome do produto
@@ -30,35 +30,35 @@ export const createProduct = async (bodyData, sessionData) => {
 
 
     if (sku.length != 7) {
-        req.flash('message', 'O código precisa ter 7 caracteres');
-        return res.render('products/add');
+        requisition.flash('message', 'O código precisa ter 7 caracteres');
+        return reply.render('products/add');
     }
 
     // validação se os dados realmente são números
     if (Number.isNaN(parsedPrice)) {
-        req.flash('message', 'O preço precisa ser um número (ex: 100.25');
-        return res.render('products/add')
+        requisition.flash('message', 'O preço precisa ser um número (ex: 100.25');
+        return reply.render('products/add')
     }
 
     if (Number.isNaN(parsedQuantity)) {
-        req.flash('message', 'A quantidade precisa ser um número (ex: 10');
-        return res.render('products/add');
+        requisition.flash('message', 'A quantidade precisa ser um número (ex: 10');
+        return reply.render('products/add');
     }
 
     if (Number.isNaN(parsedCategoryId)) {
-        req.flash('message', 'A categoria precisa ser um número')
-        return res.render('products/add')
+        requisition.flash('message', 'A categoria precisa ser um número')
+        return reply.render('products/add')
     }
 
     // verifica se os valores são abaixo de zero
     if (parsedPrice <= 0) {
-        req.flash('message', 'O valor não pode ser igual ou menor que zero')
-        return res.render('products/add')
+        requisition.flash('message', 'O valor não pode ser igual ou menor que zero')
+        return reply.render('products/add')
     }
 
     if (parsedQuantity < 0) {
-        req.flash('message', 'A quantidade não pode ser menor que zero')
-        return res.render('products/add')
+        requisition.flash('message', 'A quantidade não pode ser menor que zero')
+        return reply.render('products/add')
     }
 
 
@@ -67,8 +67,8 @@ export const createProduct = async (bodyData, sessionData) => {
 
 
     if (!categoryData) {
-        req.flash('message', 'Categoria inválida')
-        return res.render('products/add')
+        requisition.flash('message', 'Categoria inválida')
+        return reply.render('products/add')
     }
 
     const product = {
