@@ -1,3 +1,26 @@
 <div class="container">
-    <h1>Dashboard</h1>
+    <h1>Produtos</h1>
+    {{#if productsQuantity}}
+        <section class="products-container">
+            <h3>Resumo de produtos</h3>
+            <ul class="list">
+                <li class="list-item">
+                    <strong>Total de produtos:</strong>{{productsQuantity}}
+                </li>
+                <li class="list-item">Eletrônicos: {{eletronicCategory}}</li>
+                <li class="list-item">Limpeza: {{cleanCategory}}</li>
+                <li class="list-item">Escritório: {{officeCategory}}</li>
+
+            </ul>
+        </section>
+    {{else}}
+        <p>Nenhum produto cadastrado ainda.</p>
+    {{/if}}
+
 </div>
+
+<!-- {{#each products}}
+<ul>
+    <li>{{id}} - {{Category.name}}</li>
+</ul>
+{{/each}} */ -->

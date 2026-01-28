@@ -89,3 +89,32 @@ export const createProduct = async (requisition, reply, sessionData) => {
         UserId: userId
     })
 }
+
+export const showProducts = async (req, res) => {
+    
+    const datas = await Product.findAll({include: Category});
+
+    const products = datas.map((result => result.get({plain: true})))
+
+    let productsQuantity = products.length;
+
+    if (productsQuantity === 0) {
+        productsQuantity = false;
+    }
+
+    let eletronicCategory = 0;
+    let cleanCategory = 0;
+    let officeCategory = 0;
+    products.forEach(product => {
+        if (product.CategoryId === 1) {
+            eletronicCategory += 1;
+        } else if (product.CategoryId) {
+            cleanCategory += 1;
+        } else {
+            officeCategory += 1;
+        }
+    });
+
+    console.log(products)
+    res.render('products/dashboard', {products, productsQuantity, eletronicCategory, cleanCategory, officeCategory})
+}

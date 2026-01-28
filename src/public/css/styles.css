@@ -255,7 +255,51 @@ textarea {
 
 textarea::placeholder {
     font-weight: bold;
-    color:#ccc
+    color: #ccc
+}
+
+/* PRODUCTS CONTAINER */
+.products-container {
+    position: fixed;
+    right: 20px;
+
+    background-color: #0018ff;
+    color: #fff;
+
+    padding: 16px 20px;
+    border-radius: 10px;
+
+    width: 220px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.products-container h3 {
+    font-size: 16px;
+    text-align: center;
+    background-color: transparent;
+    margin: 0;
+}
+
+
+
+.list {
+    padding: 0;
+    margin: 5px 0 0;
+    background-color: transparent;
+}
+
+.list-item {
+    list-style: none;
+    font-size: 14px;
+    margin-bottom: 4px;
+    background-color: transparent;
+}
+
+.products-container strong {
+    background-color: transparent;
+    margin-right: 4px;
 }
 
 /* FOOTER */
