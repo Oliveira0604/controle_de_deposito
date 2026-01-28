@@ -19,8 +19,6 @@ const bcrypt = (await import('bcrypt')).default;
 
 const { register } = await import('../../src/services/AuthService.js');
 const User = (await import('../../src/models/User.js')).default;
-// import User from '../../src/models/User.js';
-
 
 describe('AuthService - register', () => {
     beforeEach(() => {

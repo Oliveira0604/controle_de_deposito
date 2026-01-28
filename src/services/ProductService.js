@@ -36,12 +36,12 @@ export const createProduct = async (requisition, reply, sessionData) => {
 
     // validação se os dados realmente são números
     if (Number.isNaN(parsedPrice)) {
-        requisition.flash('message', 'O preço precisa ser um número (ex: 100.25');
+        requisition.flash('message', 'O preço precisa ser um número (ex: 100.25)');
         return reply.render('products/add')
     }
 
     if (Number.isNaN(parsedQuantity)) {
-        requisition.flash('message', 'A quantidade precisa ser um número (ex: 10');
+        requisition.flash('message', 'A quantidade precisa ser um número (ex: 10)');
         return reply.render('products/add');
     }
 
