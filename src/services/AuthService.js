@@ -75,8 +75,6 @@ export const register = async (req, res) => {
     // criptografa a senha
     const hashedPassword = await bcrypt.hash(password, salt)
 
-    console.log(formattedName)
-
     const user = {
         name: formattedName,
         email: formattedEmail,
