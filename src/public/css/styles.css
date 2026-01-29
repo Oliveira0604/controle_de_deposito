@@ -212,6 +212,14 @@ form input[type='submit']:hover {
     border-radius: 5px;
     border: 1px solid #ffffff;
     width: 300px;
+
+}
+
+.form-control input:focus {
+    outline: none;
+    border: 3px solid #ffffff;
+    /* Borda branca fina */
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 .form-control input::placeholder {
@@ -262,6 +270,12 @@ textarea {
 textarea::placeholder {
     font-weight: bold;
     color: #ccc
+}
+
+textarea:focus {
+    outline: none;
+    border: 3px solid #ffffff;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 /* PRODUCTS CONTAINER */
@@ -345,12 +359,17 @@ textarea::placeholder {
     color: white;
     font-weight: bold;
     font-size: 20px;
-    margin-bottom: 30px;
     background-color: transparent;
 }
 
 .product-info {
-    margin-top: 35px;
+    margin-top: 10px;
+    background-color: transparent;
+}
+
+.product-info p {
+    margin-top: 1em;
+    margin-bottom: 2.5em;
     background-color: transparent;
 }
 
@@ -377,7 +396,8 @@ textarea::placeholder {
 .btn-edit:hover,
 .delete-btn:hover {
     background-color: white;
-    color: #007bff; /* Ou a cor do seu fundo */
+    color: #007bff;
+    /* Ou a cor do seu fundo */
 }
 
 /* FOOTER */
