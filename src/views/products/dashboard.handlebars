@@ -1,20 +1,37 @@
 <div class="container">
     <h1>Produtos</h1>
     {{#if productsQuantity}}
-        <section class="products-container">
-            <h3>Resumo de produtos</h3>
-            <ul class="list">
-                <li class="list-item">
-                    <strong>Total de produtos:</strong>{{productsQuantity}}
-                </li>
-                <li class="list-item">Eletrônicos: {{eletronicCategory}}</li>
-                <li class="list-item">Limpeza: {{cleanCategory}}</li>
-                <li class="list-item">Escritório: {{officeCategory}}</li>
-
-            </ul>
-        </section>
+    <section class="products-container">
+        <div class="summary-item">
+            <i class="bi bi-box"></i>
+            <span>Total: {{productsQuantity}}</span>
+        </div>
+        <div class="summary-item">
+            <span><i class="bi bi-display"></i> Eletrônico: {{eletronicCategory}}</span>
+        </div>
+        <div class="summary-item">
+            <span><i class="bi bi-bucket"></i> Limpeza: {{cleanCategory}}</span>
+        </div>
+        <div class="summary-item">
+            <span><i class="bi bi-pencil-square"></i> Escritório: {{officeCategory}}</span>
+        </div>
+    </section>
+    <div class="container-cards">
+        <a href="/products/eletronics" class="card-estoque">
+            <i class="bi bi-display"></i>
+            <span>Eletrônicos</span>
+        </a>
+        <a href="/products/cleaning" class="card-estoque">
+            <i class="bi bi-bucket"></i>
+            <span>Limpeza</span>
+        </a>
+        <a href="/products/office" class="card-estoque">
+            <i class="bi bi-pencil-square"></i>
+            <span>Escritório</span>
+        </a>
+    </div>
     {{else}}
-        <p>Nenhum produto cadastrado ainda.</p>
+    <p>Nenhum produto cadastrado ainda.</p>
     {{/if}}
 
 </div>
