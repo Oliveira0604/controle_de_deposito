@@ -1,4 +1,4 @@
-import { createProduct, showProducts } from '../services/ProductService.js'
+import { createProduct, showProducts, showEletronics } from '../services/ProductService.js'
 
 
 export const addPage = (req, res) => {
@@ -24,4 +24,8 @@ export const addSave = async (req, res) => {
 export const showDashboard = async (req, res) => {
     showProducts(req, res)
     
+}
+
+export const showEletronicsPage = async (req, res) => {
+    showEletronics(req, res)
 }

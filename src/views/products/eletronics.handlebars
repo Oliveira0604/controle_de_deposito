@@ -1,0 +1,26 @@
+<div class="products-category">
+    {{#if eletronicsQuantity}}
+    {{#each eletronics}}
+    <div class="product-card">
+        <div class="product-info">
+            <span>{{this.name}}</span>
+            <div class="form-actions">
+                <form action="/" method="post">
+                <input type="hidden" name="id" value="{{id}}">
+                    <input type="submit" value="Editar" class="edit-btn">
+                </form>
+                   <form action="/">
+                <input type="hidden" name="id" value="{{id}}">
+                    <input type="submit" value="Excluir" class="delete-btn">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{/each}}
+
+    {{else}}
+    <p>Nenhum eletronico cadastrado</p>
+    {{/if}}
+
+</div>

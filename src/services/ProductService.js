@@ -118,3 +118,15 @@ export const showProducts = async (req, res) => {
     console.log(products)
     res.render('products/dashboard', {products, productsQuantity, eletronicCategory, cleanCategory, officeCategory})
 }
+
+export const showEletronics = async (req, res) => {
+    const eletronics = await Product.findAll({raw: true, where: {CategoryId: 1}});
+
+    let eletronicsQuantity = eletronics.length;
+    
+    if (eletronicsQuantity === 0) {
+        eletronicsQuantity = false
+    }
+
+    res.render('products/eletronics', {eletronicsQuantity, eletronics})
+}
