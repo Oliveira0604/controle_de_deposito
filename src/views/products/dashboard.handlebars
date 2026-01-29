@@ -1,11 +1,11 @@
 <div class="container">
     <h1>Produtos</h1>
     {{#if productsQuantity}}
+    <div class="summary-item">
+        <i class="bi bi-box"></i>
+        <span>Total: {{productsQuantity}}</span>
+    </div>
     <section class="products-container">
-        <div class="summary-item">
-            <i class="bi bi-box"></i>
-            <span>Total: {{productsQuantity}}</span>
-        </div>
         <div class="summary-item">
             <span><i class="bi bi-display"></i> Eletrônico: {{eletronicCategory}}</span>
         </div>

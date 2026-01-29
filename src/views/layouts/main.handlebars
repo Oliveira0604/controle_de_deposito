@@ -12,12 +12,11 @@
 
 <body>
     <nav class="navbar">
-        <img src="/img/caixa.webp" alt="caixa">
+        <a href="/products/dashboard"><img src="/img/caixa.webp" alt="caixa"></a>
         {{#if session.userid}}
         <ul>
             <li><a href="/products/dashboard">Produtos</a></li>
             <li><a href="/products/add">Cadastrar Produto</a></li>
-            <li><a href="/products/search">Pesquisar</a></li>
         </ul>
         {{else}}
         <ul>

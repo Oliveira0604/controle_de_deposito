@@ -115,7 +115,6 @@ export const showProducts = async (req, res) => {
         }
     });
 
-    console.log(products)
     res.render('products/dashboard', {products, productsQuantity, eletronicCategory, cleanCategory, officeCategory})
 }
 
