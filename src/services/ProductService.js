@@ -129,14 +129,7 @@ export const getCleaningProducts = async (categoryId) => {
     return await Product.findAll({ raw: true, where: { CategoryId: categoryId } });
 }
 
-export const showEletronics = async (req, res) => {
-    const eletronics = await Product.findAll({ raw: true, where: { CategoryId: 1 } });
+export const getEletronicsProducts = async (categoryId) => {
+    return await Product.findAll({ raw: true, where: { CategoryId: categoryId } });
 
-    let eletronicsQuantity = eletronics.length;
-
-    if (eletronicsQuantity === 0) {
-        eletronicsQuantity = false
-    }
-
-    res.render('products/eletronics', { eletronicsQuantity, eletronics })
 }

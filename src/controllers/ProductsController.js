@@ -1,4 +1,4 @@
-import { createProduct, deleteProduct, showProducts,showEletronics, getCleaningProducts } from '../services/ProductService.js'
+import { createProduct, deleteProduct, showProducts, getEletronicsProducts, getCleaningProducts } from '../services/ProductService.js'
 
 
 export const addPage = (req, res) => {
@@ -48,7 +48,14 @@ export const showCleaningPage = async (req, res) => {
 }
 
 export const showEletronicsPage = async (req, res) => {
-    showEletronics(req, res)
+    const eletronicsProducts = await getEletronicsProducts(1);
+    let eletronicsQuantity = eletronicsProducts.length;
+
+    if (eletronicsQuantity === 0) {
+        eletronicsQuantity = false
+    }
+
+    res.render('products/eletronics', { eletronicsQuantity, eletronicsProducts })
 }
 
 export const deletedProduct = async (req, res) => {
