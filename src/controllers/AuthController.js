@@ -27,11 +27,18 @@ export const registerPage = (req, res) => {
 
 export const registerSave = async (req, res) => {
     try {
-        await register(req, res)
+        await register(req)
+        req.flash('message', 'Conta criada com sucesso!')
+        return res.render('auth/login')
     } catch (error) {
         console.log(error)
-        req.flash('message', 'Erro ao criar a conta')
+        req.flash('message', error.message)
         return res.render('auth/register')
     }
 
+}
+
+export const logOut = (req, res) => {
+    req.session.destroy()
+    res.redirect('/auth/login')
 }

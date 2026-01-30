@@ -20,15 +20,15 @@ export const login = async (requisition) => {
 
     // se não forem, da a mensagem e renderiza a página de login
     if (!passwordMatch) {
-       throw new Error('Email ou senha incorretos')
+        throw new Error('Email ou senha incorretos')
     }
 
-     return user
+    return user
 
 }
 
-export const register = async (req, res) => {
-    const { name, email, password, confirmPassword } = req.body;
+export const register = async (requisition) => {
+    const { name, email, password, confirmPassword } = requisition.body;
 
     // uso do helper de validateName
     const nameError = validateName(name);
@@ -38,8 +38,7 @@ export const register = async (req, res) => {
 
     // se alguma das condições não forem atentida da a flash message e renderiza a mesma página
     if (nameError) {
-        req.flash('message', nameError);
-        return res.render('auth/register')
+        throw new Error(nameError)
     }
 
     // formata o email 
@@ -51,16 +50,14 @@ export const register = async (req, res) => {
 
     // verifica se existr algum usuário com o mesmo email
     if (emailExists) {
-        req.flash('message', 'Esse email já esta cadastrado')
-        return res.render('auth/register')
+        throw new Error('Esse email já esta cadastrado')
     }
 
     // verifica se a senha atende ao padrão
     const passwordError = validatePassword(password, confirmPassword);
 
     if (passwordError) {
-        req.flash('message', passwordError);
-        return res.render('auth/register')
+        throw new Error(passwordError)
     }
 
     // prepara o algoritmo do hash
@@ -76,7 +73,5 @@ export const register = async (req, res) => {
     }
 
     await User.create(user)
-    req.flash('message', 'Conta criada com sucesso!')
-    return res.render('auth/login')
 
 }
