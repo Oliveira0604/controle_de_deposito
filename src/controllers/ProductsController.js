@@ -1,4 +1,4 @@
-import { createProduct, deleteProduct, showProducts, getEletronicsProducts, getCleaningProducts, getOfficeProducts } from '../services/ProductService.js'
+import { createProduct, deleteProduct, showProducts, getEletronicsProducts, getCleaningProducts, getOfficeProducts, editProductPage, updateProduct } from '../services/ProductService.js'
 
 
 export const addPage = (req, res) => {
@@ -80,7 +80,7 @@ export const showEletronicsPage = async (req, res) => {
 
 export const showOfficePage = async (req, res) => {
     try {
-        const officeProducts = await getCleaningProducts(3);
+        const officeProducts = await getOfficeProducts(3);
 
         let officeQuantity = officeProducts.length
 
@@ -88,12 +88,12 @@ export const showOfficePage = async (req, res) => {
             officeQuantity = false
         }
 
-        res.render('products/office', {officeProducts, officeQuantity})
+        res.render('products/office', { officeProducts, officeQuantity })
     } catch (error) {
         req.flash('message', 'Erro ao acessar a página de produtos de escritório.')
         res.redirect('/products/office')
     }
-    
+
 }
 
 export const deletedProduct = async (req, res) => {
@@ -108,4 +108,46 @@ export const deletedProduct = async (req, res) => {
         res.render('products/dashboard')
     }
 
+}
+
+export const editProduct = async (req, res) => {
+    const productId = req.params.id;
+
+    const product = await editProductPage(productId)
+
+    res.render('products/edit', { product })
+}
+
+export const update = async (req, res) => {
+    try {
+        const productId = req.body.id
+
+        const name = req.body.name
+        const sku = req.body.sku
+        const price = req.body.price
+        const quantity = req.body.quantity
+        const categoryId = req.body.categoryId
+        const description = req.body.description
+
+        const productDatas = {
+            name: name,
+            sku: sku,
+            price: price,
+            quantity: quantity,
+            categoryId: categoryId,
+            description: description
+        }
+
+        await updateProduct(productDatas, productId)
+
+        req.flash('message', 'Produto editado com sucesso')
+        req.session.save(() => {
+            res.redirect('/products/dashboard')
+        })
+    } catch (error) {
+        console.log(error.message)
+
+        req.flash('message', 'Erro ao editar o produto')
+        res.render('products/dashboard')
+    }
 }

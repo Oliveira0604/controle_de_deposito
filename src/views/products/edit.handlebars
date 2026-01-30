@@ -1,0 +1,30 @@
+<div class="add-container">
+    <h2>Editar {{product.name}}</h2>
+    <form action="/products/update" method="post">
+    <input type="hidden" name="id" value="{{product.id}}">
+        <div class="form-control">
+            <label for="name">Nome:</label>
+            <input type="text" name="name" placeholder="{{product.name}}" required>
+        </div>
+        <div class="form-control">
+            <label for="sku">Código:</label>
+            <input type="text" name="sku" placeholder="{{product.sku}}" required>
+        </div>
+        <div class="form-control">
+            <label for="price">Preço:</label>
+            <input type="number" name="price" placeholder="R${{product.price}}" required step="0.01">
+        </div>
+         <div class="form-control">
+            <label for="quantity">Quantidade:</label>
+            <input type="number" name="quantity" placeholder="{{product.quantity}}" required>
+        </div>
+         <div class="form-control">
+            <label for="category">Categoria:</label>
+            <input type="number" name="categoryId" placeholder="Atual: {{product.CategoryId}} (1- Eletrônico; 2- Limpeza; 3- Escritório)" required>
+        </div>
+        <div class="form-control">
+            <textarea name="description" placeholder="{{product.description}}"></textarea>
+        </div>
+        <input type="submit" value="Editar">
+    </form>
+</div>

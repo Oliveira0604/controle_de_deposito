@@ -118,3 +118,12 @@ export const getOfficeProducts = async (categoryId) => {
     return await Product.findAll({raw: true, where: {CategoryId: categoryId}})
     
 }
+
+export const editProductPage = async (productId) => {
+    return await Product.findOne({raw: true, where: {id: productId}})
+}
+
+export const updateProduct = async (productDatas, productId) => {
+    await Product.update(productDatas, {where: {id: productId}})
+    
+}

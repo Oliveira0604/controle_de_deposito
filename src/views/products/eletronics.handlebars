@@ -12,10 +12,7 @@
             <span>{{name}}</span>
             <p>{{description}}</p>
             <div class="form-actions">
-                <form action="/" method="post">
-                <input type="hidden" name="id" value="{{id}}">
-                    <input type="submit" value="Editar" class="edit-btn">
-                </form>
+                <a href="/products/edit/{{id}}" class="edit-btn">Editar</a>
                    <form action="/products/delete" method="post">
                 <input type="hidden" name="id" value="{{id}}">
                     <input type="submit" value="Excluir" class="delete-btn">
