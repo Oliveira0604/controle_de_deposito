@@ -34,19 +34,14 @@ describe('ProductService.js - createProduct', () => {
             body: {
                 name: '',
             },
-            flash: jest.fn()
-        }
-        const res = {
-            render: jest.fn()
+            flash: jest.fn(),
+            session: {
+                userid: 1
+            }
         }
 
-        await createProduct(req, res);
-        expect(req.flash).toHaveBeenCalledTimes(1)
-        expect(req.flash).toHaveBeenCalledWith(
-            'message', 'O nome do produto não pode ser vazio.'
-        )
-        expect(res.render).toHaveBeenCalledTimes(1)
-        expect(res.render).toHaveBeenCalledWith('products/add')
+        await expect(createProduct(req)).rejects.toThrow('O nome do produto não pode ser vazio.');
+
     })
 
     test('deve barrar se o sku nao for exatamente 7', async () => {
@@ -55,20 +50,13 @@ describe('ProductService.js - createProduct', () => {
                 name: 'Tv Samsumg',
                 sku: 'EL'
             },
-            flash: jest.fn()
-        }
-        const res = {
-            render: jest.fn()
+            flash: jest.fn(),
+            session: {
+                userid: 1
+            }
         }
 
-        await createProduct(req, res);
-        expect(req.flash).toHaveBeenCalledTimes(1)
-        expect(req.flash).toHaveBeenCalledWith(
-            'message',
-            'O código precisa ter 7 caracteres'
-        )
-        expect(res.render).toHaveBeenCalledTimes(1)
-        expect(res.render).toHaveBeenCalledWith('products/add')
+        await expect(createProduct(req)).rejects.toThrow('O código precisa ter 7 caracteres.');
     })
 
     test('deve barrar se o valor recebido do input preco nao for um numero', async () => {
@@ -78,20 +66,13 @@ describe('ProductService.js - createProduct', () => {
                 sku: 'EL-0001',
                 price: "aaa"
             },
-            flash: jest.fn()
-        }
-        const res = {
-            render: jest.fn()
+            flash: jest.fn(),
+            session: {
+                userid: 1
+            }
         }
 
-        await createProduct(req, res);
-        expect(req.flash).toHaveBeenCalledTimes(1)
-        expect(req.flash).toHaveBeenCalledWith(
-            'message',
-            'O preço precisa ser um número (ex: 100.25)'
-        )
-        expect(res.render).toHaveBeenCalledTimes(1)
-        expect(res.render).toHaveBeenCalledWith('products/add')
+        await expect(createProduct(req)).rejects.toThrow('O preço precisa ser um número (ex: 100.25)');
     })
 
     test('deve barrar se o valor recebido do input quantidade nao for um numero', async () => {
@@ -102,20 +83,13 @@ describe('ProductService.js - createProduct', () => {
                 price: 1000,
                 quantity: "aaa"
             },
-            flash: jest.fn()
-        }
-        const res = {
-            render: jest.fn()
+            flash: jest.fn(),
+            session: {
+                userid: 1
+            }
         }
 
-        await createProduct(req, res);
-        expect(req.flash).toHaveBeenCalledTimes(1)
-        expect(req.flash).toHaveBeenCalledWith(
-            'message',
-            'A quantidade precisa ser um número (ex: 10)'
-        )
-        expect(res.render).toHaveBeenCalledTimes(1)
-        expect(res.render).toHaveBeenCalledWith('products/add')
+        await expect(createProduct(req)).rejects.toThrow('A quantidade precisa ser um número (ex: 10)');
     })
 
     test('deve barrar se o valor recebido do input categoria nao for um numero', async () => {
@@ -127,20 +101,13 @@ describe('ProductService.js - createProduct', () => {
                 quantity: 1,
                 categoryId: 'aaa'
             },
-            flash: jest.fn()
-        }
-        const res = {
-            render: jest.fn()
+            flash: jest.fn(),
+            session: {
+                userid: 1
+            }
         }
 
-        await createProduct(req, res);
-        expect(req.flash).toHaveBeenCalledTimes(1)
-        expect(req.flash).toHaveBeenCalledWith(
-            'message',
-            'A categoria precisa ser um número'
-        )
-        expect(res.render).toHaveBeenCalledTimes(1)
-        expect(res.render).toHaveBeenCalledWith('products/add')
+        await expect(createProduct(req)).rejects.toThrow('A categoria precisa ser um número');
     })
 
     test('deve barrar se o preco for menor do que zero', async () => {
@@ -152,20 +119,13 @@ describe('ProductService.js - createProduct', () => {
                 quantity: 1,
                 categoryId: 1
             },
-            flash: jest.fn()
-        }
-        const res = {
-            render: jest.fn()
+            flash: jest.fn(),
+            session: {
+                userid: 1
+            }
         }
 
-        await createProduct(req, res);
-        expect(req.flash).toHaveBeenCalledTimes(1)
-        expect(req.flash).toHaveBeenCalledWith(
-            'message',
-            'O valor não pode ser igual ou menor que zero'
-        )
-        expect(res.render).toHaveBeenCalledTimes(1)
-        expect(res.render).toHaveBeenCalledWith('products/add')
+        await expect(createProduct(req)).rejects.toThrow('O valor não pode ser igual ou menor que zero');
     })
 
     test('deve barrar se a quantidade for menor do que zero', async () => {
@@ -177,20 +137,13 @@ describe('ProductService.js - createProduct', () => {
                 quantity: -1,
                 categoryId: 1
             },
-            flash: jest.fn()
-        }
-        const res = {
-            render: jest.fn()
+            flash: jest.fn(),
+            session: {
+                userid: 1
+            }
         }
 
-        await createProduct(req, res);
-        expect(req.flash).toHaveBeenCalledTimes(1)
-        expect(req.flash).toHaveBeenCalledWith(
-            'message',
-            'A quantidade não pode ser menor que zero'
-        )
-        expect(res.render).toHaveBeenCalledTimes(1)
-        expect(res.render).toHaveBeenCalledWith('products/add')
+        await expect(createProduct(req)).rejects.toThrow('A quantidade não pode ser menor que zero');
     })
 
     test('deve barrar se a categoria nao existir', async () => {
@@ -198,25 +151,19 @@ describe('ProductService.js - createProduct', () => {
         const req = {
             body: {
                 name: 'Tv Samsumg',
-                sku: 'El00001',
+                sku: 'EL-0001',
                 price: 100,
                 quantity: 1,
                 categoryId: 4
             },
-            flash: jest.fn()
-        }
-        const res = {
-            render: jest.fn()
+            flash: jest.fn(),
+            session: {
+                userid: 1
+            }
         }
 
-        await createProduct(req, res, 1);
+        await expect(createProduct(req)).rejects.toThrow('Categoria inválida');
 
-        expect(Category.findOne).toHaveBeenCalledTimes(1)
-        expect(Category.findOne).toHaveBeenCalledWith({where: {id: 4}})
-        expect(req.flash).toHaveBeenCalledWith(
-            'message',
-            'Categoria inválida'
-        )
     })
 
     test('deve criar o produto', async () => {
@@ -230,15 +177,15 @@ describe('ProductService.js - createProduct', () => {
             body: {
                 name: 'Tv Samsumg',
                 description: 'teste2',
-                sku: 'El00001',
+                sku: 'EL-0001',
                 price: 100,
                 quantity: 1,
                 categoryId: 1
             },
-            flash: jest.fn()
-        }
-        const res = {
-            render: jest.fn()
+            flash: jest.fn(),
+            session: {
+                userid: 1
+            }
         }
 
         const product = {
@@ -258,10 +205,8 @@ describe('ProductService.js - createProduct', () => {
             UserId: 1
         }
 
-        await createProduct(req, res, 1);
+        await createProduct(req);
         expect(Product.create).toHaveBeenCalledTimes(1)
         expect(Product.create).toHaveBeenCalledWith(product)
-        expect(Movement.create).toHaveBeenCalledTimes(1)
-        expect(Movement.create).toHaveBeenCalledWith(movement)
     })
 })

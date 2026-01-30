@@ -40,11 +40,8 @@ describe('AuthService - register', () => {
             render: jest.fn()
         }
 
-        await register(req, res)
+        await expect(register(req)).rejects.toThrow('O nome é obrigatório')
 
-        expect(req.flash).toHaveBeenCalledTimes(1)
-        expect(res.render).toHaveBeenCalledTimes(1)
-        expect(res.render).toHaveBeenCalledWith('auth/register')
     })
 
     test('deve retornar erro se o email já existir', async () => {
@@ -68,15 +65,8 @@ describe('AuthService - register', () => {
             render: jest.fn()
         }
 
-        await register(req, res)
+        await expect(register(req)).rejects.toThrow('Esse email já esta cadastrado')
 
-        expect(req.flash).toHaveBeenCalledTimes(1)
-        expect(User.findOne).toHaveBeenCalledTimes(1)
-        expect(req.flash).toHaveBeenCalledWith(
-            'message',
-            'Esse email já esta cadastrado'
-        )
-        expect(res.render).toHaveBeenCalledTimes(1)
     })
 
     test('deve barrar se a senha não seguir os padrões', async () => {
@@ -93,15 +83,7 @@ describe('AuthService - register', () => {
             render: jest.fn()
         }
 
-        await register(req, res);
-
-        expect(req.flash).toHaveBeenCalledTimes(1)
-        expect(req.flash).toHaveBeenCalledWith(
-            'message',
-            'A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas e símbolos.'
-        )
-        expect(res.render).toHaveBeenCalledTimes(1)
-        expect(res.render).toHaveBeenCalledWith('auth/register')
+        await expect(register(req)).rejects.toThrow('A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas e símbolos.');
     })
 
     test('deve criptografar a senha antes de salvar', async () => {
