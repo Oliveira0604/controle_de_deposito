@@ -19,3 +19,21 @@ export const productNameValidation = (name) => {
     return null;
 }
 
+
+export const productSkuValidation = (sku) => {
+    const trimmedSku = sku ? sku.trim() : '';
+    
+
+    if (!trimmedSku) {
+        return 'O código não pode ser vázio.';
+    }
+
+    if (trimmedSku.length != 7) {
+        return 'O código precisa ter 7 caracteres.'
+    }
+
+    // regex que verifica se o código esta no formato correto de duas letras no inicio, hifen após as letras e terminando com 4 números
+    if (/^[A-Za-z]{2}-\d{4}$/) {
+        return 'O código não está no padrão correto.'
+    }
+}

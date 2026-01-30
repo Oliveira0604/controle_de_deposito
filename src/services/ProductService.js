@@ -1,6 +1,6 @@
 import Product from "../models/Product.js";
 import Category from "../models/Category.js";
-import { productNameValidation } from "../helpers/productValidation.js";
+import { productNameValidation, productSkuValidation } from "../helpers/productValidation.js";
 import { formatName } from "../helpers/formatting.js";
 import Movement from "../models/Movement.js";
 
@@ -29,9 +29,11 @@ export const createProduct = async (requisition, reply, sessionData) => {
     const finalProductName = formatName(name)
 
 
-    if (sku.length != 7) {
-        requisition.flash('message', 'O código precisa ter 7 caracteres');
-        return reply.render('products/add');
+    // valida o sku 
+    const skuError = productSkuValidation(sku)
+    if (skuError) {
+        requisition.flash('message', skuError)
+        reply.render('products/add')
     }
 
     // validação se os dados realmente são números
@@ -74,7 +76,7 @@ export const createProduct = async (requisition, reply, sessionData) => {
     const product = {
         name: finalProductName,
         description: description,
-        sku: sku,
+        sku: sku.toUpperCase(),
         price: parsedPrice,
         quantity: parsedQuantity,
         CategoryId: categoryData.id
@@ -88,13 +90,18 @@ export const createProduct = async (requisition, reply, sessionData) => {
         ProductId: createdProduct.id,
         UserId: userId
     })
+
+    req.flash('message', 'O produto foi cadastrado com sucesso!');
+    req.session.save(() => {
+        return res.redirect('/products/dashboard')
+    })
 }
 
 export const showProducts = async (req, res) => {
-    
-    const datas = await Product.findAll({include: Category});
 
-    const products = datas.map((result => result.get({plain: true})))
+    const datas = await Product.findAll({ include: Category });
+
+    const products = datas.map((result => result.get({ plain: true })))
 
     let productsQuantity = products.length;
 
@@ -115,17 +122,17 @@ export const showProducts = async (req, res) => {
         }
     });
 
-    res.render('products/dashboard', {products, productsQuantity, eletronicCategory, cleanCategory, officeCategory})
+    res.render('products/dashboard', { products, productsQuantity, eletronicCategory, cleanCategory, officeCategory })
 }
 
 export const showEletronics = async (req, res) => {
-    const eletronics = await Product.findAll({raw: true, where: {CategoryId: 1}});
+    const eletronics = await Product.findAll({ raw: true, where: { CategoryId: 1 } });
 
     let eletronicsQuantity = eletronics.length;
-    
+
     if (eletronicsQuantity === 0) {
         eletronicsQuantity = false
     }
 
-    res.render('products/eletronics', {eletronicsQuantity, eletronics})
+    res.render('products/eletronics', { eletronicsQuantity, eletronics })
 }
