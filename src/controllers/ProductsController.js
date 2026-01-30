@@ -1,4 +1,4 @@
-import { createProduct, deleteProduct, showProducts, showEletronics } from '../services/ProductService.js'
+import { createProduct, deleteProduct, showProducts,showEletronics, getCleaningProducts } from '../services/ProductService.js'
 
 
 export const addPage = (req, res) => {
@@ -25,6 +25,26 @@ export const addSave = async (req, res) => {
 export const showDashboard = async (req, res) => {
     showProducts(req, res)
 
+}
+
+export const showCleaningPage = async (req, res) => {
+    try {
+        const cleaningProducts = await getCleaningProducts(2)
+        console.log(cleaningProducts)
+
+        let cleaningQuantity = cleaningProducts.length;
+
+        if (cleaningQuantity === 0) {
+            cleaningQuantity = false
+        }
+
+        res.render('products/cleaning', { cleaningProducts, cleaningQuantity })
+    } catch (error) {
+        console.log(error)
+
+        req.flash('message', 'Erro ao mostrar os produtos')
+        res.redirect('/products/dashboard')
+    }
 }
 
 export const showEletronicsPage = async (req, res) => {

@@ -125,6 +125,10 @@ export const showProducts = async (req, res) => {
     res.render('products/dashboard', { products, productsQuantity, eletronicCategory, cleanCategory, officeCategory })
 }
 
+export const getCleaningProducts = async (categoryId) => {
+    return await Product.findAll({ raw: true, where: { CategoryId: categoryId } });
+}
+
 export const showEletronics = async (req, res) => {
     const eletronics = await Product.findAll({ raw: true, where: { CategoryId: 1 } });
 

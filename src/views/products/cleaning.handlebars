@@ -1,0 +1,33 @@
+    <div class="form-search">
+        <form action="/products/eletronics" method="get">
+            <input type="search" name="search" placeholder="Nome do Produto">
+            <input type="submit" value="Pesquisar" >
+        </form>
+    </div>
+<div class="products-category">
+    {{#if cleaningQuantity}}
+    {{#each cleaningProducts}}
+    <div class="product-card">
+        <div class="product-info">
+            <span>{{name}}</span>
+            <p>{{description}}</p>
+            <div class="form-actions">
+                <form action="/" method="post">
+                <input type="hidden" name="id" value="{{id}}">
+                    <input type="submit" value="Editar" class="edit-btn">
+                </form>
+                   <form action="/products/delete" method="post">
+                <input type="hidden" name="id" value="{{id}}">
+                    <input type="submit" value="Excluir" class="delete-btn">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{/each}}
+
+    {{else}}
+    <p>Nenhum produto de limpeza cadastrado</p>
+    {{/if}}
+
+</div>
