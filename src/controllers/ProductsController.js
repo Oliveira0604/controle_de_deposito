@@ -23,14 +23,34 @@ export const addSave = async (req, res) => {
 }
 
 export const showDashboard = async (req, res) => {
-    showProducts(req, res)
+    const products = await showProducts()
+
+    let productsQuantity = products.length;
+
+    if (productsQuantity === 0) {
+        productsQuantity = false;
+    }
+
+    let eletronicCategory = 0;
+    let cleanCategory = 0;
+    let officeCategory = 0;
+    products.forEach(product => {
+        if (product.CategoryId === 1) {
+            eletronicCategory += 1;
+        } else if (product.CategoryId) {
+            cleanCategory += 1;
+        } else {
+            officeCategory += 1;
+        }
+    });
+
+    res.render('products/dashboard', { products, productsQuantity, eletronicCategory, cleanCategory, officeCategory })
 
 }
 
 export const showCleaningPage = async (req, res) => {
     try {
         const cleaningProducts = await getCleaningProducts(2)
-        console.log(cleaningProducts)
 
         let cleaningQuantity = cleaningProducts.length;
 
