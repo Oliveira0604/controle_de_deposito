@@ -4,16 +4,15 @@ import { formatName } from '../helpers/formatting.js';
 
 import bcrypt from 'bcrypt';
 
-export const login = async (req, res) => {
-    const { email, password } = req.body;
+export const login = async (requisition) => {
+    const { email, password } = requisition.body;
 
     // faz a busca no banco para verificar se o usuário existe
     const user = await User.findOne({ where: { email: email } })
 
     // se não exister, renderiza a página de login novamente
     if (!user) {
-        req.flash('message', 'Usuario não encotrado')
-        return res.render('auth/login')
+        throw new Error('Usuario não encotrado')
     }
 
     // verifica se a senha salva no banco e a senha informada são iguais
@@ -21,15 +20,10 @@ export const login = async (req, res) => {
 
     // se não forem, da a mensagem e renderiza a página de login
     if (!passwordMatch) {
-        req.flash('message', 'Email ou senha incorretos')
-        return res.render('auth/login')
+       throw new Error('Email ou senha incorretos')
     }
 
-    // a session em userid recebe o id so usuário e o servidor inicia a sessão criando um id de sessão único.
-    req.session.userid = user.id;
-    req.session.save(() => {
-        res.redirect('/products/dashboard')
-    })
+     return user
 
 }
 

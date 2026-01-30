@@ -7,11 +7,16 @@ export const loginPage = (req, res) => {
 export const loginPost = async (req, res) => {
 
     try {
-        await login(req, res);
-
+        const user = await login(req);
+        // a session em userid recebe o id so usuário e o servidor inicia a sessão criando um id de sessão único.
+        req.session.userid = user.id
+        req.session.save(() => {
+            res.redirect('/products/dashboard')
+        })
     } catch (error) {
         console.log(`Erro ao fazer o login: ${error}`)
-        req.flash('message', 'Erro ao fazer o login')
+
+        req.flash('message', error.message)
         return res.render('auth/login');
     }
 }
