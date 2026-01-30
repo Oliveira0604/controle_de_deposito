@@ -113,3 +113,8 @@ export const getEletronicsProducts = async (categoryId) => {
     return await Product.findAll({ raw: true, where: { CategoryId: categoryId } });
 
 }
+
+export const getOfficeProducts = async (categoryId) => {
+    return await Product.findAll({raw: true, where: {CategoryId: categoryId}})
+    
+}

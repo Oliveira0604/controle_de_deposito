@@ -1,4 +1,4 @@
-import { createProduct, deleteProduct, showProducts, getEletronicsProducts, getCleaningProducts } from '../services/ProductService.js'
+import { createProduct, deleteProduct, showProducts, getEletronicsProducts, getCleaningProducts, getOfficeProducts } from '../services/ProductService.js'
 
 
 export const addPage = (req, res) => {
@@ -37,7 +37,7 @@ export const showDashboard = async (req, res) => {
     products.forEach(product => {
         if (product.CategoryId === 1) {
             eletronicCategory += 1;
-        } else if (product.CategoryId) {
+        } else if (product.CategoryId === 2) {
             cleanCategory += 1;
         } else {
             officeCategory += 1;
@@ -76,6 +76,24 @@ export const showEletronicsPage = async (req, res) => {
     }
 
     res.render('products/eletronics', { eletronicsQuantity, eletronicsProducts })
+}
+
+export const showOfficePage = async (req, res) => {
+    try {
+        const officeProducts = await getCleaningProducts(3);
+
+        let officeQuantity = officeProducts.length
+
+        if (officeQuantity === 0) {
+            officeQuantity = false
+        }
+
+        res.render('products/office', {officeProducts, officeQuantity})
+    } catch (error) {
+        req.flash('message', 'Erro ao acessar a página de produtos de escritório.')
+        res.redirect('/products/office')
+    }
+    
 }
 
 export const deletedProduct = async (req, res) => {

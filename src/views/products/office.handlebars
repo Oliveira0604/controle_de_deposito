@@ -1,12 +1,12 @@
     <div class="form-search">
-        <form action="/products/cleaning" method="get">
+        <form action="/products/office" method="get">
             <input type="search" name="search" placeholder="Nome do Produto">
             <input type="submit" value="Pesquisar" >
         </form>
     </div>
 <div class="products-category">
-    {{#if cleaningQuantity}}
-    {{#each cleaningProducts}}
+    {{#if officeQuantity}}
+    {{#each officeProducts}}
     <div class="product-card">
         <div class="product-info">
             <span>{{name}}</span>
