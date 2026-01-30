@@ -1,4 +1,4 @@
-import { createProduct, showProducts, showEletronics } from '../services/ProductService.js'
+import { createProduct, deleteProduct, showProducts, showEletronics } from '../services/ProductService.js'
 
 
 export const addPage = (req, res) => {
@@ -24,4 +24,18 @@ export const showDashboard = async (req, res) => {
 
 export const showEletronicsPage = async (req, res) => {
     showEletronics(req, res)
+}
+
+export const deletedProduct = async (req, res) => {
+    try {
+        deleteProduct(req, res)
+        req.flash('message', 'Produto deletado com sucesso')
+        req.session.save(() => {
+            res.render('products/dashboard')
+        })
+    } catch (error) {
+        req.flash('message', 'Erro ao deletar o produto.', + error)
+        res.render('products/dashboard')
+    }
+    
 }

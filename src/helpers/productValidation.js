@@ -33,7 +33,9 @@ export const productSkuValidation = (sku) => {
     }
 
     // regex que verifica se o código esta no formato correto de duas letras no inicio, hifen após as letras e terminando com 4 números
-    if (/^[A-Za-z]{2}-\d{4}$/) {
+    if (!/^[A-Za-z]{2}-\d{4}$/.test(trimmedSku)) {
         return 'O código não está no padrão correto.'
     }
+
+    return null
 }

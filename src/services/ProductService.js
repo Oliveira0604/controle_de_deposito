@@ -4,13 +4,13 @@ import { productNameValidation, productSkuValidation } from "../helpers/productV
 import { formatName } from "../helpers/formatting.js";
 import Movement from "../models/Movement.js";
 
-export const createProduct = async (requisition, reply, sessionData) => {
+export const createProduct = async (requisition, reply, sessionUserId) => {
 
     // pega os dados que vem do form 
     const { name, sku, price, quantity, categoryId, description } = requisition.body;
 
     // pega o id do usuário
-    const userId = sessionData;
+    const userId = sessionUserId;
 
     // passa os dados que vem do body como string para Number
     const parsedPrice = Number(price);
@@ -30,10 +30,11 @@ export const createProduct = async (requisition, reply, sessionData) => {
 
 
     // valida o sku 
+    console.log(sku)
     const skuError = productSkuValidation(sku)
     if (skuError) {
         requisition.flash('message', skuError)
-        reply.render('products/add')
+        return reply.render('products/add')
     }
 
     // validação se os dados realmente são números
@@ -73,6 +74,8 @@ export const createProduct = async (requisition, reply, sessionData) => {
         return reply.render('products/add')
     }
 
+
+
     const product = {
         name: finalProductName,
         description: description,
@@ -91,10 +94,22 @@ export const createProduct = async (requisition, reply, sessionData) => {
         UserId: userId
     })
 
-    req.flash('message', 'O produto foi cadastrado com sucesso!');
-    req.session.save(() => {
-        return res.redirect('/products/dashboard')
+    requisition.flash('message', 'O produto foi cadastrado com sucesso!');
+    requisition.session.save(() => {
+        return reply.redirect('/products/dashboard')
     })
+}
+
+export const deleteProduct = async (productData) => {
+
+    const productId = productData.body.id;
+
+    const userId = productData.session.userid;
+
+    const destroyedProduct = await Product.destroy({ where: { id: productId } });
+
+    return destroyedProduct
+
 }
 
 export const showProducts = async (req, res) => {
