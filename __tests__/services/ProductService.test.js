@@ -118,7 +118,7 @@ describe('ProductService.js - createProduct', () => {
         expect(res.render).toHaveBeenCalledWith('products/add')
     })
 
-    test('deve barrar se o valor recebido do input quantidade nao for um numero', async () => {
+    test('deve barrar se o valor recebido do input categoria nao for um numero', async () => {
         const req = {
             body: {
                 name: 'Tv Samsumg',
