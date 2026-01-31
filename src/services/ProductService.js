@@ -5,32 +5,26 @@ import { formatName } from "../helpers/formatting.js";
 import Movement from "../models/Movement.js";
 import { Op } from 'sequelize';
 
-export const createProduct = async (requisition) => {
-
-    // pega os dados que vem do form 
-    const { name, sku, price, quantity, categoryId, description } = requisition.body;
-
-    // pega o id do usuário
-    const userId = requisition.session.userid;
+export const createProduct = async (productDatas, userId) => {
 
     // passa os dados que vem do body como string para Number
-    const parsedPrice = Number(price);
-    const parsedQuantity = Number(quantity);
-    const parsedCategoryId = Number(categoryId);
+    const parsedPrice = Number(productDatas.price);
+    const parsedQuantity = Number(productDatas.quantity);
+    const parsedCategoryId = Number(productDatas.categoryId);
 
     // faz a validação do nome
-    const productNameErro = productNameValidation(name);
+    const productNameErro = productNameValidation(productDatas.name);
 
     if (productNameErro) {
         throw new Error(productNameErro)
     }
 
     // tratamento do nome do produto
-    const finalProductName = formatName(name)
+    const finalProductName = formatName(productDatas.name)
 
 
     // valida o sku 
-    const skuError = productSkuValidation(sku)
+    const skuError = productSkuValidation(productDatas.sku)
     if (skuError) {
         throw new Error(skuError)
     }
@@ -68,15 +62,15 @@ export const createProduct = async (requisition) => {
 
     const product = {
         name: finalProductName,
-        description: description,
-        sku: sku.toUpperCase(),
+        description: productDatas.description,
+        sku: productDatas.sku.toUpperCase(),
         price: parsedPrice,
         quantity: parsedQuantity,
         CategoryId: categoryData.id
     }
 
     const createdProduct = await Product.create(product);
-    console.log(createdProduct.id)
+
     await Movement.create({
         type: 'in',
         quantity: parsedQuantity,

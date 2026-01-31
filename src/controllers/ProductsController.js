@@ -8,12 +8,27 @@ export const addPage = (req, res) => {
 export const addSave = async (req, res) => {
 
     try {
-        await createProduct(req);
+        const { name, sku, price, quantity, categoryId, description } = req.body;
+
+        const userId = req.session.userid
+
+        const productDatas = { 
+            name: name,
+            sku: sku,
+            price: price,
+            quantity: quantity,
+            categoryId: categoryId,
+            description: description
+        };
+
+        await createProduct(productDatas, userId);
+        
         req.flash('message', 'O produto foi cadastrado com sucesso!');
 
         req.session.save(() => {
             return res.redirect('/products/dashboard')
         })
+
     } catch (error) {
         console.log(`Erro ao salvar o produto: ${error.message}`)
 
@@ -94,7 +109,7 @@ export const showEletronicsPage = async (req, res) => {
         req.flash('message', 'Erro ao carregar os produtos')
         res.redirect('/products/dashboard')
     }
-    
+
 }
 
 export const showOfficePage = async (req, res) => {

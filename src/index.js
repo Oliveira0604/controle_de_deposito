@@ -72,7 +72,7 @@ app.get('/', (req, res) => {
 
 async function startApp () {
     try {
-        await conn.sync({force: true})
+        await conn.sync({force: false})
         await seedCategories()
         console.log('Banco conectado com sucesso')
         app.listen(process.env.PORT)
