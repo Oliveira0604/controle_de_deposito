@@ -50,7 +50,11 @@ export const showDashboard = async (req, res) => {
 
 export const showCleaningPage = async (req, res) => {
     try {
-        const cleaningProducts = await getCleaningProducts(2)
+        let search = ''
+        if (req.query.search) {
+            search = req.query.search
+        }
+        const cleaningProducts = await getCleaningProducts(2, search)
 
         let cleaningQuantity = cleaningProducts.length;
 
@@ -62,25 +66,44 @@ export const showCleaningPage = async (req, res) => {
     } catch (error) {
         console.log(error)
 
-        req.flash('message', 'Erro ao mostrar os produtos')
+        req.flash('message', 'Erro ao carregar os produtos')
         res.redirect('/products/dashboard')
     }
 }
 
 export const showEletronicsPage = async (req, res) => {
-    const eletronicsProducts = await getEletronicsProducts(1);
-    let eletronicsQuantity = eletronicsProducts.length;
+    try {
+        let search = ''
 
-    if (eletronicsQuantity === 0) {
-        eletronicsQuantity = false
+        if (req.query.search) {
+            search = req.query.search
+        }
+
+        const eletronicsProducts = await getEletronicsProducts(1, search);
+
+        let eletronicsQuantity = eletronicsProducts.length;
+
+        if (eletronicsQuantity === 0) {
+            eletronicsQuantity = false
+        }
+
+        res.render('products/eletronics', { eletronicsQuantity, eletronicsProducts })
+    } catch (error) {
+        console.log(`Erro ao cadastrar o produto: ${error.message}`)
+
+        req.flash('message', 'Erro ao carregar os produtos')
+        res.redirect('/products/dashboard')
     }
-
-    res.render('products/eletronics', { eletronicsQuantity, eletronicsProducts })
+    
 }
 
 export const showOfficePage = async (req, res) => {
     try {
-        const officeProducts = await getOfficeProducts(3);
+        let search = ''
+        if (req.query.search) {
+            search = req.query.search
+        }
+        const officeProducts = await getOfficeProducts(3, search);
 
         let officeQuantity = officeProducts.length
 

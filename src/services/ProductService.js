@@ -3,6 +3,7 @@ import Category from "../models/Category.js";
 import { productNameValidation, productSkuValidation } from "../helpers/productValidation.js";
 import { formatName } from "../helpers/formatting.js";
 import Movement from "../models/Movement.js";
+import { Op } from 'sequelize';
 
 export const createProduct = async (requisition) => {
 
@@ -105,17 +106,17 @@ export const showProducts = async () => {
     return products
 }
 
-export const getCleaningProducts = async (categoryId) => {
-    return await Product.findAll({ raw: true, where: { CategoryId: categoryId } });
+export const getCleaningProducts = async (categoryId, name='') => {
+    return await Product.findAll({ raw: true, where: { name: {[Op.like]: `%${name}%`}, CategoryId: categoryId } });
 }
 
-export const getEletronicsProducts = async (categoryId) => {
-    return await Product.findAll({ raw: true, where: { CategoryId: categoryId } });
+export const getEletronicsProducts = async (categoryId, name='') => {
+    return await Product.findAll({ raw: true, where: { name: {[Op.like]: `%${name}%`}, CategoryId: categoryId } });
 
 }
 
-export const getOfficeProducts = async (categoryId) => {
-    return await Product.findAll({raw: true, where: {CategoryId: categoryId}})
+export const getOfficeProducts = async (categoryId, name='') => {
+    return await Product.findAll({raw: true, where: {name: {[Op.like]: `%${name}%`}, CategoryId: categoryId}})
     
 }
 
