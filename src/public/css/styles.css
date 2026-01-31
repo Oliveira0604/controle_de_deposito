@@ -449,6 +449,42 @@ textarea:focus {
     transform: translateY(-2px);
 }
 
+.btn-edit {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 7px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-edit:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: #ffffff;
+    cursor: pointer;
+    transform: translateY(-2px);
+}
+
+.btn-delete {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 7px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-delete:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: #ffffff;
+    cursor: pointer;
+    transform: translateY(-2px);
+}
+
 /* FOOTER */
 footer {
     height: 150px;

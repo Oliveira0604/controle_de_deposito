@@ -5,7 +5,7 @@ import conn from '../db/conn.js';
 
 const Movement = conn.define('Movement', {
     type: {
-        type: DataTypes.ENUM('in', 'out'),
+        type: DataTypes.ENUM('in', 'out', 'updated', 'deleted'),
         allowNull: false
     },
     quantity: {
@@ -15,8 +15,10 @@ const Movement = conn.define('Movement', {
     description: {
         type: DataTypes.TEXT,
         allowNull: true
-    }
+    }, 
+    
 })
+
 
 Movement.belongsTo(Product)
 Movement.belongsTo(User)

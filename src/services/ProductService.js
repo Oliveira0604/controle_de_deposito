@@ -76,6 +76,7 @@ export const createProduct = async (requisition) => {
     }
 
     const createdProduct = await Product.create(product);
+    console.log(createdProduct.id)
     await Movement.create({
         type: 'in',
         quantity: parsedQuantity,
@@ -86,15 +87,18 @@ export const createProduct = async (requisition) => {
 
 }
 
-export const deleteProduct = async (productData) => {
+export const deleteProduct = async (productId, userId) => {
 
-    const productId = productData.body.id;
+    await Product.destroy({ where: { id: productId } });
 
-    const userId = productData.session.userid;
+    await Movement.create({
+        type: 'deleted',
+        quantity: 1,
+        description: 'produto deletado',
+        ProductId: productId,
+        UserId: userId
+    })
 
-    const destroyedProduct = await Product.destroy({ where: { id: productId } });
-
-    return destroyedProduct
 
 }
 
@@ -106,25 +110,33 @@ export const showProducts = async () => {
     return products
 }
 
-export const getCleaningProducts = async (categoryId, name='') => {
-    return await Product.findAll({ raw: true, where: { name: {[Op.like]: `%${name}%`}, CategoryId: categoryId } });
+export const getCleaningProducts = async (categoryId, name = '') => {
+    return await Product.findAll({ raw: true, where: { name: { [Op.like]: `%${name}%` }, CategoryId: categoryId } });
 }
 
-export const getEletronicsProducts = async (categoryId, name='') => {
-    return await Product.findAll({ raw: true, where: { name: {[Op.like]: `%${name}%`}, CategoryId: categoryId } });
+export const getEletronicsProducts = async (categoryId, name = '') => {
+    return await Product.findAll({ raw: true, where: { name: { [Op.like]: `%${name}%` }, CategoryId: categoryId } });
 
 }
 
-export const getOfficeProducts = async (categoryId, name='') => {
-    return await Product.findAll({raw: true, where: {name: {[Op.like]: `%${name}%`}, CategoryId: categoryId}})
-    
+export const getOfficeProducts = async (categoryId, name = '') => {
+    return await Product.findAll({ raw: true, where: { name: { [Op.like]: `%${name}%` }, CategoryId: categoryId } })
+
 }
 
 export const editProductPage = async (productId) => {
-    return await Product.findOne({raw: true, where: {id: productId}})
+    return await Product.findOne({ raw: true, where: { id: productId } })
 }
 
-export const updateProduct = async (productDatas, productId) => {
-    await Product.update(productDatas, {where: {id: productId}})
-    
+export const updateProduct = async (productDatas, productId, userId) => {
+    await Product.update(productDatas, { where: { id: productId } })
+
+    await Movement.create({
+        type: 'updated',
+        quantity: productDatas.quantity,
+        description: 'produto editado',
+        ProductId: productId,
+        UserId: userId
+    })
+
 }

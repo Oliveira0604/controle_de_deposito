@@ -8,7 +8,7 @@ export const addPage = (req, res) => {
 export const addSave = async (req, res) => {
 
     try {
-        await createProduct(req, res);
+        await createProduct(req);
         req.flash('message', 'O produto foi cadastrado com sucesso!');
 
         req.session.save(() => {
@@ -121,10 +121,15 @@ export const showOfficePage = async (req, res) => {
 
 export const deletedProduct = async (req, res) => {
     try {
-        deleteProduct(req, res)
+
+        const prodcutId = req.body.id;
+        const userId = req.session.userid;
+
+        deleteProduct(prodcutId, userId)
+
         req.flash('message', 'Produto deletado com sucesso')
         req.session.save(() => {
-            res.render('products/dashboard')
+            res.redirect('/products/dashboard')
         })
     } catch (error) {
         req.flash('message', 'Erro ao deletar o produto.', + error)
@@ -144,6 +149,7 @@ export const editProduct = async (req, res) => {
 export const update = async (req, res) => {
     try {
         const productId = req.body.id
+        const userId = req.session.userid;
 
         const name = req.body.name
         const sku = req.body.sku
@@ -161,7 +167,7 @@ export const update = async (req, res) => {
             description: description
         }
 
-        await updateProduct(productDatas, productId)
+        await updateProduct(productDatas, productId, userId)
 
         req.flash('message', 'Produto editado com sucesso')
         req.session.save(() => {

@@ -24,6 +24,8 @@ const Product = conn.define('Product', {
         allowNull: false,
         defaultValue: 0
     }
+}, {
+    paranoid: true
 })
 
 export default Product;
