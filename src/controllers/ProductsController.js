@@ -77,7 +77,7 @@ export const showCleaningPage = async (req, res) => {
             cleaningQuantity = false
         }
 
-        res.render('products/cleaning', { cleaningProducts, cleaningQuantity })
+        res.render('products/cleaning', { cleaningProducts, cleaningQuantity, search })
     } catch (error) {
         console.log(error)
 
@@ -102,7 +102,7 @@ export const showEletronicsPage = async (req, res) => {
             eletronicsQuantity = false
         }
 
-        res.render('products/eletronics', { eletronicsQuantity, eletronicsProducts })
+        res.render('products/eletronics', { eletronicsQuantity, eletronicsProducts, search })
     } catch (error) {
         console.log(`Erro ao cadastrar o produto: ${error.message}`)
 
@@ -126,7 +126,7 @@ export const showOfficePage = async (req, res) => {
             officeQuantity = false
         }
 
-        res.render('products/office', { officeProducts, officeQuantity })
+        res.render('products/office', { officeProducts, officeQuantity, search })
     } catch (error) {
         req.flash('message', 'Erro ao acessar a página de produtos de escritório.')
         res.redirect('/products/office')
