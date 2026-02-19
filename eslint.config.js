@@ -15,9 +15,9 @@ export default defineConfig([
     },
     rules: {
       "no-unused-vars": "warn",
-      "eqeqeq": "error",          // Obriga usar ===
-      "prefer-const": "error",    // Obriga usar const quando possível
-      "no-var": "error",          // Proíbe o uso de var
+      "eqeqeq": "error",          
+      "prefer-const": "error",    
+      "no-var": "error",          
     }
   },
 ]);
