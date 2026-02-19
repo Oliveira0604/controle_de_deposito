@@ -1,4 +1,4 @@
-import express, { urlencoded } from 'express';
+import express from 'express';
 import { engine } from 'express-handlebars';
 import session from 'express-session';
 import sessioFileStore from 'session-file-store';
@@ -8,10 +8,10 @@ import 'dotenv/config';
 import flash from 'express-flash';
 import conn from './db/conn.js';
 
-import User from './models/User.js';
-import Product from './models/Product.js';
-import Category from './models/Category.js';
-import Movement from './models/Movement.js';
+import './models/User.js';
+import './models/Product.js';
+import './models/Category.js';
+import './models/Movement.js';
 
 import authRoutes from './routes/authRoutes.js';
 import productsRoutes from './routes/productsRoutes.js'
